@@ -15,76 +15,105 @@ import {
 
 const fallbackTemplates: Template[] = [
   {
-    _id: 'seed-victory-day',
+    _id: '670000000000000000000001',
     title: 'মহান বিজয় দিবস - লাল-সবুজ শ্রদ্ধাঞ্জলি',
     occasionType: 'victory_day',
-    thumbnailUrl: '',
-    canvasDimensions: { width: 1200, height: 1600 },
+    thumbnailUrl: '/templates/victory-day-bg.jpg',
+    canvasDimensions: { width: 1200, height: 800 },
     layoutConfig: {
       backgroundColor: '#005A36',
       primaryColor: '#F42A41',
       secondaryColor: '#FFD700',
       leaderSlots: [
-        { id: '1', label: 'শীর্ষ নেতা ১', x: 220, y: 180, width: 220, height: 220, shape: 'circle' },
-        { id: '2', label: 'শীর্ষ নেতা ২', x: 980, y: 180, width: 220, height: 220, shape: 'circle' },
+        { id: '1', label: 'শীর্ষ নেতা ১', x: 676, y: 142, width: 152, height: 152, shape: 'circle' },
+        { id: '2', label: 'শীর্ষ নেতা ২', x: 873, y: 142, width: 152, height: 152, shape: 'circle' },
+        { id: '3', label: 'শীর্ষ নেতা ৩', x: 1070, y: 142, width: 152, height: 152, shape: 'circle' },
       ],
-      candidateSlot: { x: 600, y: 820, width: 650, height: 850 },
+      candidateSlot: { x: 252, y: 344, width: 372, height: 372 },
       textSlots: {
-        headline: { label: 'শিরোনাম', fontFamily: 'Hind Siliguri', fontSize: 64, color: '#FFFFFF', y: 420 },
-        candidateName: { label: 'নাম', fontFamily: 'Hind Siliguri', fontSize: 72, color: '#FFD700', y: 1320 },
-        designation: { label: 'পদবি', fontFamily: 'Hind Siliguri', fontSize: 38, color: '#FFFFFF', y: 1400 },
-        party: { label: 'দল', fontFamily: 'Hind Siliguri', fontSize: 32, color: '#E2E8F0', y: 1460 },
-        footerCredit: { label: 'প্রচারে', fontFamily: 'Hind Siliguri', fontSize: 30, color: '#FFFFFF', y: 1540 },
+        headline: { label: 'শিরোনাম', fontFamily: 'Hind Siliguri', fontSize: 48, color: '#FFFFFF', y: 280 },
+        candidateName: { label: 'নাম', fontFamily: 'Hind Siliguri', fontSize: 36, color: '#FFFFFF', y: 618 },
+        designation: { label: 'পদবি', fontFamily: 'Hind Siliguri', fontSize: 22, color: '#FFD700', y: 662 },
+        party: { label: 'দল', fontFamily: 'Hind Siliguri', fontSize: 20, color: '#E2E8F0', y: 700 },
+        footerCredit: { label: 'প্রচারে', fontFamily: 'Hind Siliguri', fontSize: 22, color: '#FFFFFF', y: 772 },
       },
     },
     isActive: true,
   },
   {
-    _id: 'seed-campaign',
+    _id: '670000000000000000000002',
     title: 'নির্বাচনী প্রচারণা ও দোয়া প্রার্থী',
     occasionType: 'campaign',
-    thumbnailUrl: '',
-    canvasDimensions: { width: 1200, height: 1600 },
+    thumbnailUrl: '/templates/campaign-bg.jpg',
+    canvasDimensions: { width: 1200, height: 800 },
     layoutConfig: {
       backgroundColor: '#0F2027',
       primaryColor: '#203A43',
       secondaryColor: '#FFCC00',
       leaderSlots: [
-        { id: '1', label: 'নেতা ১', x: 200, y: 150, width: 180, height: 180, shape: 'circle' },
-        { id: '2', label: 'নেতা ২', x: 600, y: 130, width: 220, height: 220, shape: 'circle' },
-        { id: '3', label: 'নেতা ৩', x: 1000, y: 150, width: 180, height: 180, shape: 'circle' },
+        { id: '1', label: 'নেতা ১', x: 667, y: 142, width: 156, height: 156, shape: 'circle' },
+        { id: '2', label: 'নেতা ২', x: 864, y: 142, width: 156, height: 156, shape: 'circle' },
+        { id: '3', label: 'নেতা ৩', x: 1065, y: 142, width: 156, height: 156, shape: 'circle' },
       ],
-      candidateSlot: { x: 600, y: 800, width: 700, height: 900 },
+      candidateSlot: { x: 284, y: 352, width: 392, height: 392 },
       textSlots: {
-        headline: { label: 'স্লোগান', fontFamily: 'Hind Siliguri', fontSize: 56, color: '#FFFFFF', y: 380 },
-        candidateName: { label: 'নাম', fontFamily: 'Hind Siliguri', fontSize: 76, color: '#FFD700', y: 1310 },
-        designation: { label: 'পদবি', fontFamily: 'Hind Siliguri', fontSize: 42, color: '#FFFFFF', y: 1395 },
-        party: { label: 'দল', fontFamily: 'Hind Siliguri', fontSize: 34, color: '#A0AEC0', y: 1455 },
-        footerCredit: { label: 'প্রচারে', fontFamily: 'Hind Siliguri', fontSize: 32, color: '#FFFFFF', y: 1540 },
+        headline: { label: 'স্লোগান', fontFamily: 'Hind Siliguri', fontSize: 48, color: '#FFFFFF', y: 280 },
+        candidateName: { label: 'নাম', fontFamily: 'Hind Siliguri', fontSize: 36, color: '#FFFFFF', y: 618 },
+        designation: { label: 'পদবি', fontFamily: 'Hind Siliguri', fontSize: 22, color: '#FFD700', y: 662 },
+        party: { label: 'দল', fontFamily: 'Hind Siliguri', fontSize: 20, color: '#A0AEC0', y: 700 },
+        footerCredit: { label: 'প্রচারে', fontFamily: 'Hind Siliguri', fontSize: 22, color: '#FFFFFF', y: 772 },
       },
     },
     isActive: true,
   },
   {
-    _id: 'seed-condolence',
+    _id: '670000000000000000000003',
+    title: 'পবিত্র ঈদ-উল-ফিতর ও ঈদ মোবারক',
+    occasionType: 'eid',
+    thumbnailUrl: '/templates/eid-bg.jpg',
+    canvasDimensions: { width: 1200, height: 800 },
+    layoutConfig: {
+      backgroundColor: '#064E3B',
+      primaryColor: '#047857',
+      secondaryColor: '#F59E0B',
+      leaderSlots: [
+        { id: '1', label: 'নেতৃত্ব ১', x: 742, y: 142, width: 140, height: 140, shape: 'circle' },
+        { id: '2', label: 'নেতৃত্ব ২', x: 909, y: 142, width: 140, height: 140, shape: 'circle' },
+        { id: '3', label: 'নেতৃত্ব ৩', x: 1076, y: 142, width: 140, height: 140, shape: 'circle' },
+      ],
+      candidateSlot: { x: 302, y: 337, width: 396, height: 396 },
+      textSlots: {
+        headline: { label: 'ঈদ শুভেচ্ছা', fontFamily: 'Hind Siliguri', fontSize: 48, color: '#FFFFFF', y: 280 },
+        candidateName: { label: 'নাম', fontFamily: 'Hind Siliguri', fontSize: 36, color: '#FFFFFF', y: 618 },
+        designation: { label: 'পদবি', fontFamily: 'Hind Siliguri', fontSize: 22, color: '#FFD700', y: 662 },
+        party: { label: 'সংগঠন', fontFamily: 'Hind Siliguri', fontSize: 20, color: '#E2E8F0', y: 700 },
+        footerCredit: { label: 'প্রচারে', fontFamily: 'Hind Siliguri', fontSize: 22, color: '#FFFFFF', y: 772 },
+      },
+    },
+    isActive: true,
+  },
+  {
+    _id: '670000000000000000000004',
     title: 'শোক প্রস্তাব ও বিনম্র শ্রদ্ধাঞ্জলি',
     occasionType: 'condolence',
-    thumbnailUrl: '',
-    canvasDimensions: { width: 1200, height: 1600 },
+    thumbnailUrl: '/templates/condolence-bg.jpg',
+    canvasDimensions: { width: 1200, height: 800 },
     layoutConfig: {
       backgroundColor: '#171923',
       primaryColor: '#2D3748',
       secondaryColor: '#CBD5E0',
       leaderSlots: [
-        { id: '1', label: 'শীর্ষ নেতৃত্ব', x: 600, y: 140, width: 190, height: 190, shape: 'circle' },
+        { id: '1', label: 'শীর্ষ নেতৃত্ব ১', x: 606, y: 142, width: 148, height: 148, shape: 'circle' },
+        { id: '2', label: 'শীর্ষ নেতৃত্ব ২', x: 809, y: 142, width: 148, height: 148, shape: 'circle' },
+        { id: '3', label: 'শীর্ষ নেতৃত্ব ৩', x: 1011, y: 142, width: 148, height: 148, shape: 'circle' },
       ],
-      candidateSlot: { x: 600, y: 680, width: 550, height: 650 },
+      candidateSlot: { x: 230, y: 348, width: 368, height: 368 },
       textSlots: {
-        headline: { label: 'শোক বাণী', fontFamily: 'Hind Siliguri', fontSize: 60, color: '#E2E8F0', y: 320 },
-        candidateName: { label: 'নাম', fontFamily: 'Hind Siliguri', fontSize: 70, color: '#FFFFFF', y: 1120 },
-        designation: { label: 'পদবি', fontFamily: 'Hind Siliguri', fontSize: 36, color: '#CBD5E0', y: 1210 },
-        party: { label: 'দল', fontFamily: 'Hind Siliguri', fontSize: 32, color: '#A0AEC0', y: 1270 },
-        footerCredit: { label: 'শোক প্রকাশে', fontFamily: 'Hind Siliguri', fontSize: 32, color: '#FFFFFF', y: 1540 },
+        headline: { label: 'শোক বাণী', fontFamily: 'Hind Siliguri', fontSize: 48, color: '#FFFFFF', y: 280 },
+        candidateName: { label: 'নাম', fontFamily: 'Hind Siliguri', fontSize: 36, color: '#FFFFFF', y: 618 },
+        designation: { label: 'পদবি', fontFamily: 'Hind Siliguri', fontSize: 22, color: '#FFD700', y: 662 },
+        party: { label: 'দল', fontFamily: 'Hind Siliguri', fontSize: 20, color: '#A0AEC0', y: 700 },
+        footerCredit: { label: 'শোক প্রকাশে', fontFamily: 'Hind Siliguri', fontSize: 22, color: '#FFFFFF', y: 772 },
       },
     },
     isActive: true,
@@ -167,11 +196,10 @@ export default function TemplatesPage() {
           <button
             key={cat.id}
             onClick={() => setSelectedOccasion(cat.id)}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition duration-150 ${
-              selectedOccasion === cat.id
-                ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/30 font-semibold'
-                : 'bg-slate-900/80 text-slate-300 hover:bg-slate-800 border border-slate-800'
-            }`}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition duration-150 ${selectedOccasion === cat.id
+              ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/30 font-semibold'
+              : 'bg-slate-900/80 text-slate-300 hover:bg-slate-800 border border-slate-800'
+              }`}
           >
             {cat.label}
           </button>
@@ -201,32 +229,25 @@ export default function TemplatesPage() {
               >
                 {/* Visual Preview Box */}
                 <div
-                  className="relative h-64 w-full flex flex-col items-center justify-between p-4 overflow-hidden border-b border-slate-800"
-                  style={{ backgroundColor: bgHex }}
+                  className="relative h-60 w-full flex flex-col items-center justify-between p-4 overflow-hidden border-b border-slate-800 bg-cover bg-center"
+                  style={{
+                    backgroundImage: tpl.thumbnailUrl ? `url(${tpl.thumbnailUrl})` : undefined,
+                    backgroundColor: bgHex,
+                  }}
                 >
-                  <div className="absolute inset-0 bg-black/20" />
+                  <div className="absolute inset-0 bg-black/25 pointer-events-none" />
 
                   {/* Top Badge */}
                   <div className="relative z-10 w-full flex items-center justify-between">
-                    <span className="px-2.5 py-1 rounded-md bg-black/60 backdrop-blur-md text-[11px] font-semibold text-white border border-white/10">
+                    <span className="px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md text-[11px] font-semibold text-white border border-white/10">
                       {getOccasionLabel(tpl.occasionType)}
                     </span>
-                    <span className="text-[10px] text-white/70 font-mono">
-                      {tpl.canvasDimensions?.width} × {tpl.canvasDimensions?.height} px
+                    <span className="text-[10px] text-white/90 font-mono bg-black/60 px-2 py-0.5 rounded backdrop-blur">
+                      {tpl.canvasDimensions?.width || 1200} × {tpl.canvasDimensions?.height || 800} px
                     </span>
                   </div>
 
-                  {/* Mock Visual Content */}
-                  <div className="relative z-10 text-center space-y-2 max-w-[260px]">
-                    <div className="px-3 py-1 rounded-md bg-rose-600 text-[11px] font-bold text-white shadow">
-                      {tpl.title}
-                    </div>
-                    <div className="w-16 h-20 mx-auto rounded-lg border border-white/20 bg-black/40 flex items-center justify-center text-[10px] text-white/60">
-                      প্রার্থী
-                    </div>
-                  </div>
-
-                  <div className="relative z-10 w-full text-center py-1 bg-black/40 rounded text-[9px] text-white/80">
+                  <div className="relative z-10 w-full text-center py-1 bg-black/60 backdrop-blur-md rounded text-[10px] text-white font-medium">
                     {leaderCount} জন শীর্ষ নেতা স্লট + প্রার্থী ফ্রেম
                   </div>
                 </div>
