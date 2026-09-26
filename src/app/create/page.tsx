@@ -135,6 +135,29 @@ function CreatePosterContent() {
   const [error, setError] = useState<string>('');
   const [zoomModalOpen, setZoomModalOpen] = useState(false);
 
+  // Sync form defaults with selected template theme
+  const applyTemplateDefaults = (tpl: Template) => {
+    setSelectedTemplate(tpl);
+    if (tpl.occasionType === 'victory_day') {
+      setHeadlineBangla('১৬ই ডিসেম্বর মহান বিজয় দিবস উপলক্ষে বীর শহীদদের প্রতি বিনম্র শ্রদ্ধা');
+      setDesignation('সাধারণ সম্পাদক পদপ্রার্থী');
+      setFooterCredit('প্রচারে: এলাকাবাসী ও সর্বস্তরের দেশপ্রেমিক কর্মীসমাজ');
+    } else if (tpl.occasionType === 'campaign') {
+      setHeadlineBangla('আসন্ন জাতীয় সংসদ নির্বাচনে মনোনীত প্রার্থী');
+      setDesignation('ধানের শীষ মার্কায় ভোট দিন');
+      setArea('রামপুরা, ঢাকা');
+      setFooterCredit('প্রচারে: সর্বস্তরের সচেতন ভোটার ও এলাকাবাসী');
+    } else if (tpl.occasionType === 'eid') {
+      setHeadlineBangla('পবিত্র ঈদ-উল-ফিতর উপলক্ষে সবাইকে জানাই আন্তরিক শুভেচ্ছা');
+      setDesignation('সাধারণ সম্পাদক পদপ্রার্থী');
+      setFooterCredit('শুভেচ্ছান্তে: সর্বস্তরের জনগণ ও শুভানুধ্যায়ী');
+    } else if (tpl.occasionType === 'condolence') {
+      setHeadlineBangla('১৫ আগস্ট জাতীয় শোক দিবস - বিনম্র শ্রদ্ধাঞ্জলি');
+      setDesignation('মরহুমের বিদেহী আত্মার মাগফিরাত কামনায়');
+      setFooterCredit('শোক প্রকাশে: সর্বস্তরের সহযোদ্ধা ও শুভাকাঙ্ক্ষী');
+    }
+  };
+
   // Load Templates from Backend
   useEffect(() => {
     api
@@ -142,15 +165,17 @@ function CreatePosterContent() {
       .then((res) => {
         if (res.templates && res.templates.length > 0) {
           setTemplates(res.templates);
-          // Pick requested template or first
+          // Pick requested template or victory_day/first
           if (initialTemplateId) {
             const matched = res.templates.find((t) => t._id === initialTemplateId);
-            if (matched) setSelectedTemplate(matched);
+            if (matched) applyTemplateDefaults(matched);
           } else if (initialOccasion) {
             const matched = res.templates.find((t) => t.occasionType === initialOccasion);
-            if (matched) setSelectedTemplate(matched);
+            if (matched) applyTemplateDefaults(matched);
           } else {
-            setSelectedTemplate(res.templates[0]);
+            // Default to victory_day if available, or first
+            const defaultTpl = res.templates.find((t) => t.occasionType === 'victory_day') || res.templates[0];
+            applyTemplateDefaults(defaultTpl);
           }
         }
       })
@@ -291,17 +316,16 @@ function CreatePosterContent() {
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
                 ১. টেমপ্লেট নির্বাচন করুন
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                 {templates.map((tpl) => (
                   <button
                     key={tpl._id}
                     type="button"
-                    onClick={() => setSelectedTemplate(tpl)}
-                    className={`p-3 rounded-xl border text-left text-xs transition duration-150 flex flex-col justify-between h-20 ${
-                      selectedTemplate._id === tpl._id
+                    onClick={() => applyTemplateDefaults(tpl)}
+                    className={`p-3 rounded-xl border text-left text-xs transition duration-150 flex flex-col justify-between h-20 ${selectedTemplate._id === tpl._id
                         ? 'border-emerald-500 bg-emerald-500/15 text-white shadow-md'
                         : 'border-slate-800 bg-slate-900/60 text-slate-400 hover:border-slate-700 hover:text-white'
-                    }`}
+                      }`}
                   >
                     <span className="font-bold line-clamp-2">{tpl.title}</span>
                     <span className="text-[10px] text-emerald-400 flex items-center gap-1 font-semibold">
