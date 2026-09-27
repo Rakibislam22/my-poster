@@ -133,7 +133,7 @@ function CreatePosterContent() {
   const initialTemplateId = searchParams.get('templateId');
   const initialOccasion = searchParams.get('occasion');
 
-  const { user, openAuthModal, login, register } = useAuth();
+  const { user, openAuthModal, loginDemo } = useAuth();
 
   const [templates, setTemplates] = useState<Template[]>(fallbackTemplates);
   const [selectedTemplate, setSelectedTemplate] = useState<Template>(fallbackTemplates[0]);
@@ -268,20 +268,17 @@ function CreatePosterContent() {
       return;
     }
 
+    // Require authentication before generating poster
+    if (!user) {
+      setError('পোস্টার তৈরি করতে অনুগ্রহ করে প্রথমে সাইন ইন অথবা ডেমো লগইন করুন।');
+      openAuthModal();
+      return;
+    }
+
     setIsGenerating(true);
     setProgressStage('পোস্টার তথ্য যাচাই করা হচ্ছে...');
 
     try {
-      // Auto demo-login if user is not authenticated yet so generation works seamlessly!
-      if (!user) {
-        setProgressStage('অটোমেটিক সেশন তৈরি করা হচ্ছে...');
-        try {
-          await login('user@posterbabu.bd', 'poster1234');
-        } catch {
-          await register('ডেমো ইউজার', 'user@posterbabu.bd', 'poster1234');
-        }
-      }
-
       // 1. Upload candidate photo if selected
       let uploadedCandidateUrl: string | undefined = undefined;
       if (candidatePhotoFile) {
@@ -338,6 +335,12 @@ function CreatePosterContent() {
 
   // Handle Regenerate Poster with tweaked text
   const handleRegenerate = async () => {
+    if (!user) {
+      setError('পোস্টার পুনরায় তৈরি করতে অনুগ্রহ করে সাইন ইন অথবা ডেমো লগইন করুন।');
+      openAuthModal();
+      return;
+    }
+
     if (!generatedPoster) return;
     setError('');
 
@@ -657,6 +660,38 @@ function CreatePosterContent() {
               </div>
             </div>
 
+            {/* Unauthenticated notice and quick demo login */}
+            {!user && (
+              <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                <div className="flex items-start gap-2 text-amber-200">
+                  <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-semibold text-amber-300">পোস্টার তৈরিতে লগইন আবশ্যক</span>
+                    <p className="text-[11px] text-amber-200/80 mt-0.5">
+                      পোস্টার প্রসেস ও সংরক্ষণ করতে লগইন থাকা আবশ্যক। টেস্ট করার জন্য আপনি সহজেই ১-ক্লিক ডেমো ব্যবহার করতে পারেন।
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => loginDemo()}
+                    className="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition shadow cursor-pointer"
+                  >
+                    <Sparkles className="w-3.5 h-3.5" />
+                    ১-ক্লিক ডেমো লগইন
+                  </button>
+                  <button
+                    type="button"
+                    onClick={openAuthModal}
+                    className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-xs border border-slate-600 transition cursor-pointer"
+                  >
+                    লগইন / সাইন আপ
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Submit CTA */}
             <button
               type="submit"
@@ -667,6 +702,12 @@ function CreatePosterContent() {
                 <>
                   <RefreshCw className="w-5 h-5 animate-spin" />
                   <span>{progressStage || 'পোস্টার তৈরি হচ্ছে...'}</span>
+                </>
+              ) : !user ? (
+                <>
+                  <Sparkles className="w-5 h-5" />
+                  <span>লগইন করে পোস্টার তৈরি করুন (Login to Generate)</span>
+                  <ArrowRight className="w-4 h-4 ml-1" />
                 </>
               ) : (
                 <>

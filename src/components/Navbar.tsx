@@ -19,7 +19,7 @@ import {
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
-  const { user, logout, openAuthModal } = useAuth();
+  const { user, logout, openAuthModal, loginDemo } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
@@ -73,11 +73,10 @@ export const Navbar: React.FC = () => {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition ${
-                      isActive
+                    className={`px-3 py-2 rounded-lg text-sm font-medium transition ${isActive
                         ? 'text-emerald-400 bg-emerald-500/10'
                         : 'text-slate-300 hover:text-white hover:bg-slate-900'
-                    }`}
+                      }`}
                   >
                     {link.label}
                   </Link>
@@ -112,13 +111,24 @@ export const Navbar: React.FC = () => {
                   </button>
                 </div>
               ) : (
-                <button
-                  onClick={openAuthModal}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-200 border border-slate-700 hover:bg-slate-800 hover:text-white transition"
-                >
-                  <LogIn className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>লগইন / সাইন আপ</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => loginDemo()}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/35 transition cursor-pointer shadow-sm"
+                    title="১-ক্লিকে টেস্ট ডেমো অ্যাকাউন্ট দিয়ে লগইন করুন"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <span>ডেমো লগইন</span>
+                  </button>
+
+                  <button
+                    onClick={openAuthModal}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-200 border border-slate-700 hover:bg-slate-800 hover:text-white transition cursor-pointer"
+                  >
+                    <LogIn className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>লগইন / সাইন আপ</span>
+                  </button>
+                </div>
               )}
             </div>
 
@@ -149,13 +159,12 @@ export const Navbar: React.FC = () => {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-3 py-2.5 rounded-lg text-sm font-medium ${
-                    link.highlight
+                  className={`block px-3 py-2.5 rounded-lg text-sm font-medium ${link.highlight
                       ? 'bg-emerald-600 text-white font-semibold'
                       : pathname === link.href
-                      ? 'bg-slate-900 text-emerald-400'
-                      : 'text-slate-300 hover:bg-slate-900'
-                  }`}
+                        ? 'bg-slate-900 text-emerald-400'
+                        : 'text-slate-300 hover:bg-slate-900'
+                    }`}
                 >
                   {link.label}
                 </Link>
@@ -178,15 +187,27 @@ export const Navbar: React.FC = () => {
                   </button>
                 </div>
               ) : (
-                <button
-                  onClick={() => {
-                    openAuthModal();
-                    setMobileMenuOpen(false);
-                  }}
-                  className="w-full py-2 bg-slate-900 border border-slate-700 text-white rounded-lg text-xs font-semibold"
-                >
-                  লগইন / সাইন আপ
-                </button>
+                <div className="space-y-2">
+                  <button
+                    onClick={async () => {
+                      await loginDemo();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="w-full py-2.5 bg-amber-500/15 border border-amber-500/40 text-amber-300 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <span>১-ক্লিকে ডেমো লগইন</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      openAuthModal();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="w-full py-2 bg-slate-900 border border-slate-700 text-white rounded-lg text-xs font-semibold"
+                  >
+                    লগইন / সাইন আপ
+                  </button>
+                </div>
               )}
             </div>
           </div>
