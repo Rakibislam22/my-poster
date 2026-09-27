@@ -83,6 +83,8 @@ export interface Poster {
   generatedImageUrl?: string;
   previewUrl?: string;
   status: 'pending' | 'processing' | 'completed' | 'failed';
+  regenerationCount?: number;
+  remainingRetries?: number;
   errorMessage?: string;
   createdAt: string;
 }
@@ -205,7 +207,10 @@ class ApiClient {
     return this.request('/posters/my-posters');
   }
 
-  async regeneratePoster(id: string, payload: Partial<Poster['formData']>): Promise<Poster> {
+  async regeneratePoster(
+    id: string,
+    payload: Partial<Poster['formData']> & { useAiSlogans?: boolean }
+  ): Promise<Poster> {
     return this.request(`/posters/${id}/regenerate`, {
       method: 'POST',
       body: JSON.stringify(payload),

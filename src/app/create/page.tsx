@@ -296,10 +296,52 @@ function CreatePosterContent() {
       });
 
       setGeneratedPoster(poster);
+      if (poster.formData?.headlineBangla) {
+        setHeadlineBangla(poster.formData.headlineBangla);
+      }
       setProgressStage('');
     } catch (err: any) {
       console.error('Generation error:', err);
       setError(err.message || 'পোস্টার তৈরি করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  // Handle Regenerate Poster with tweaked text
+  const handleRegenerate = async () => {
+    if (!generatedPoster) return;
+    setError('');
+
+    const maxRetries = 3;
+    const currentRetries = generatedPoster.regenerationCount || 0;
+    if (currentRetries >= maxRetries) {
+      setError('সর্বোচ্চ ৩ বার পুনরায় তৈরি করার সীমা পূর্ণ হয়েছে। নতুন পোস্টার তৈরি করুন।');
+      return;
+    }
+
+    setIsGenerating(true);
+    setProgressStage('টেক্সট আপডেট করে পোস্টার পুনরায় তৈরি করা হচ্ছে...');
+
+    try {
+      const updatedPoster = await api.regeneratePoster(generatedPoster._id, {
+        candidateName,
+        designation,
+        party,
+        area,
+        headlineBangla,
+        footerCredit,
+        useAiSlogans,
+      });
+
+      setGeneratedPoster(updatedPoster);
+      if (updatedPoster.formData?.headlineBangla) {
+        setHeadlineBangla(updatedPoster.formData.headlineBangla);
+      }
+      setProgressStage('');
+    } catch (err: any) {
+      console.error('Regeneration error:', err);
+      setError(err.message || 'পোস্টার পুনরায় তৈরি করতে সমস্যা হয়েছে।');
     } finally {
       setIsGenerating(false);
     }
@@ -697,20 +739,56 @@ function CreatePosterContent() {
                   download={`poster-${candidateName.replace(/\s+/g, '_')}.png`}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-lg shadow-emerald-900/40 flex items-center justify-center gap-2 transition"
+                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-sm shadow-lg shadow-emerald-950/50 flex items-center justify-center gap-2 transition cursor-pointer"
                 >
                   <Download className="w-4 h-4" />
                   <span>হাই-রেজ্যুলেশন PNG ডাউনলোড করুন</span>
                 </a>
 
-                <div className="flex items-center justify-between text-xs text-slate-400 px-1">
+                {/* Regenerate Section (Tweak Text & Regenerate with limited retries) */}
+                <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2.5">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-bold text-white flex items-center gap-1.5">
+                      <RefreshCw className="w-3.5 h-3.5 text-amber-400" />
+                      <span>টেক্সট পরিবর্তন করে রি-জেনারেট</span>
+                    </span>
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${(generatedPoster.regenerationCount || 0) >= 3
+                          ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
+                          : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                        }`}
+                    >
+                      বাকি আছে: {Math.max(0, 3 - (generatedPoster.regenerationCount || 0))}/৩ বার
+                    </span>
+                  </div>
+
+                  <p className="text-[11px] text-slate-400 leading-relaxed">
+                    বামে নাম, পদবি বা স্লোগান পরিবর্তন করে সন্তুষ্ট না হলে পুনরায় জেনারেট করুন:
+                  </p>
+
+                  <button
+                    type="button"
+                    onClick={handleRegenerate}
+                    disabled={isGenerating || (generatedPoster.regenerationCount || 0) >= 3}
+                    className="w-full py-2.5 px-3 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-200 font-bold text-xs flex items-center justify-center gap-1.5 transition disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <span>
+                      {(generatedPoster.regenerationCount || 0) >= 3
+                        ? 'রি-জেনারেট করার সীমা শেষ (৩/৩)'
+                        : 'আপডেট করে পুনরায় তৈরি করুন (Regenerate)'}
+                    </span>
+                  </button>
+                </div>
+
+                <div className="flex items-center justify-between text-xs text-slate-400 px-1 pt-1">
                   <span className="flex items-center gap-1 text-emerald-400">
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     প্রিন্ট-রেডি কোয়ালিটি প্রস্তুত
                   </span>
                   <button
                     onClick={() => setZoomModalOpen(true)}
-                    className="hover:text-white flex items-center gap-1"
+                    className="hover:text-white flex items-center gap-1 transition cursor-pointer"
                   >
                     <Maximize2 className="w-3.5 h-3.5" />
                     পূর্ণ আকারে দেখুন
