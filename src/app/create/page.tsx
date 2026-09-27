@@ -37,11 +37,11 @@ const fallbackTemplates: Template[] = [
         { id: '2', label: 'শীর্ষ নেতা ২', x: 841, y: 145, width: 184, height: 184, shape: 'circle' },
         { id: '3', label: 'শীর্ষ নেতা ৩', x: 1050, y: 145, width: 184, height: 184, shape: 'circle' },
       ],
-      candidateSlot: { x: 285, y: 345, width: 440, height: 440 },
+      candidateSlot: { x: 285, y: 406, width: 426, height: 426 },
       textSlots: {
         headline: { label: 'শিরোনাম', fontFamily: 'Hind Siliguri', fontSize: 48, color: '#FFFFFF', y: 280 },
-        candidateName: { label: 'নাম', fontFamily: 'Hind Siliguri', fontSize: 36, color: '#FFFFFF', y: 600 },
-        designation: { label: 'পদবি', fontFamily: 'Hind Siliguri', fontSize: 22, color: '#FFD700', y: 645 },
+        candidateName: { label: 'নাম', fontFamily: 'Hind Siliguri', fontSize: 36, color: '#FFFFFF', y: 640 },
+        designation: { label: 'পদবি', fontFamily: 'Hind Siliguri', fontSize: 22, color: '#FFD700', y: 685 },
         party: { label: 'দল', fontFamily: 'Hind Siliguri', fontSize: 20, color: '#E2E8F0', y: 700 },
         footerCredit: { label: 'প্রচারে', fontFamily: 'Hind Siliguri', fontSize: 20, color: '#FFFFFF', y: 785 },
       },
@@ -89,11 +89,11 @@ const fallbackTemplates: Template[] = [
         { id: '2', label: 'নেতৃত্ব ২', x: 842, y: 150, width: 184, height: 184, shape: 'circle' },
         { id: '3', label: 'নেতৃত্ব ৩', x: 1060, y: 150, width: 184, height: 184, shape: 'circle' },
       ],
-      candidateSlot: { x: 300, y: 360, width: 450, height: 450 },
+      candidateSlot: { x: 277, y: 434, width: 426, height: 426 },
       textSlots: {
         headline: { label: 'ঈদ শুভেচ্ছা', fontFamily: 'Hind Siliguri', fontSize: 48, color: '#FFFFFF', y: 280 },
-        candidateName: { label: 'নাম', fontFamily: 'Hind Siliguri', fontSize: 36, color: '#FFFFFF', y: 625 },
-        designation: { label: 'পদবি', fontFamily: 'Hind Siliguri', fontSize: 22, color: '#FFD700', y: 670 },
+        candidateName: { label: 'নাম', fontFamily: 'Hind Siliguri', fontSize: 36, color: '#FFFFFF', y: 655 },
+        designation: { label: 'পদবি', fontFamily: 'Hind Siliguri', fontSize: 22, color: '#FFD700', y: 700 },
         party: { label: 'সংগঠন', fontFamily: 'Hind Siliguri', fontSize: 20, color: '#E2E8F0', y: 700 },
         footerCredit: { label: 'প্রচারে', fontFamily: 'Hind Siliguri', fontSize: 20, color: '#FFFFFF', y: 785 },
       },
@@ -115,11 +115,11 @@ const fallbackTemplates: Template[] = [
         { id: '2', label: 'শ্রদ্ধাভাজন ব্যক্তিত্ব ২', x: 840, y: 155, width: 190, height: 190, shape: 'circle' },
         { id: '3', label: 'শ্রদ্ধাভাজন ব্যক্তিত্ব ৩', x: 1055, y: 155, width: 190, height: 190, shape: 'circle' },
       ],
-      candidateSlot: { x: 295, y: 350, width: 456, height: 456 },
+      candidateSlot: { x: 287, y: 414, width: 428, height: 428 },
       textSlots: {
         headline: { label: 'শোক বাণী', fontFamily: 'Hind Siliguri', fontSize: 48, color: '#FFFFFF', y: 280 },
-        candidateName: { label: 'নাম', fontFamily: 'Hind Siliguri', fontSize: 36, color: '#FFFFFF', y: 620 },
-        designation: { label: 'পদবি', fontFamily: 'Hind Siliguri', fontSize: 22, color: '#FFD700', y: 665 },
+        candidateName: { label: 'নাম', fontFamily: 'Hind Siliguri', fontSize: 36, color: '#FFFFFF', y: 645 },
+        designation: { label: 'পদবি', fontFamily: 'Hind Siliguri', fontSize: 22, color: '#FFD700', y: 690 },
         party: { label: 'দল', fontFamily: 'Hind Siliguri', fontSize: 20, color: '#A0AEC0', y: 700 },
         footerCredit: { label: 'শোক প্রকাশে', fontFamily: 'Hind Siliguri', fontSize: 20, color: '#FFFFFF', y: 785 },
       },
@@ -142,14 +142,15 @@ function CreatePosterContent() {
   const [candidateName, setCandidateName] = useState('মোঃ রাকিবুল হাসান');
   const [designation, setDesignation] = useState('সাধারণ সম্পাদক পদপ্রার্থী');
   const [party, setParty] = useState('বাংলাদেশ জাতীয়তাবাদী দল');
-  const [area, setArea] = useState('রামপুরা, ঢাকা');
+  const [area, setArea] = useState('ঢাকা-১০');
   const [headlineBangla, setHeadlineBangla] = useState(
-    '১৬ই ডিসেম্বর মহান বিজয় দিবস উপলক্ষে বীর শহীদদের প্রতি বিনম্র শ্রদ্ধা'
+    'মহান বিজয়ের রক্তস্নাত শপথে বীর শহীদদের স্মরণে সাম্য, সুবিচার ও সমৃদ্ধ বাংলাদেশ গড়ার দৃপ্ত অঙ্গীকার।'
   );
   const [footerCredit, setFooterCredit] = useState(
-    'প্রচারে: এলাকাবাসী ও সর্বস্তরের দেশপ্রেমিক কর্মীসমাজ'
+    'প্রচারে: সর্বস্তরের দেশপ্রেমিক জনগণ'
   );
   const [useAiSlogans, setUseAiSlogans] = useState(true);
+  const [isPolishing, setIsPolishing] = useState(false);
 
   // Photos
   const [candidatePhotoUrl, setCandidatePhotoUrl] = useState<string>('');
@@ -168,22 +169,22 @@ function CreatePosterContent() {
   const applyTemplateDefaults = (tpl: Template) => {
     setSelectedTemplate(tpl);
     if (tpl.occasionType === 'victory_day') {
-      setHeadlineBangla('১৬ই ডিসেম্বর মহান বিজয় দিবস উপলক্ষে বীর শহীদদের প্রতি বিনম্র শ্রদ্ধা');
-      setDesignation('সাধারণ সম্পাদক পদপ্রার্থী');
-      setFooterCredit('প্রচারে: এলাকাবাসী ও সর্বস্তরের দেশপ্রেমিক কর্মীসমাজ');
+      setHeadlineBangla('মহান বিজয়ের রক্তস্নাত শপথে বীর শহীদদের স্মরণে সাম্য, সুবিচার ও সমৃদ্ধ বাংলাদেশ গড়ার দৃপ্ত অঙ্গীকার।');
+      setDesignation('সহ-সভাপতি পদপ্রার্থী');
+      setFooterCredit('প্রচারে: সর্বস্তরের দেশপ্রেমিক জনগণ');
     } else if (tpl.occasionType === 'campaign') {
-      setHeadlineBangla('আসন্ন জাতীয় সংসদ নির্বাচনে মনোনীত প্রার্থী');
+      setHeadlineBangla('এলাকার মাটি ও মানুষের ভাগ্যোন্নয়নে, গণতন্ত্র ও নাগরিক অধিকার প্রতিষ্ঠায় আপনার মূল্যবান ভোট ও দোয়া প্রার্থী।');
       setDesignation('ধানের শীষ মার্কায় ভোট দিন');
-      setArea('রামপুরা, ঢাকা');
-      setFooterCredit('প্রচারে: সর্বস্তরের সচেতন ভোটার ও এলাকাবাসী');
+      setArea('ঢাকা-১০');
+      setFooterCredit('প্রচারে: সর্বস্তরের সচেতন ও দেশপ্রেমিক কর্মীসমাজ');
     } else if (tpl.occasionType === 'eid') {
-      setHeadlineBangla('পবিত্র ঈদ-উল-ফিতর উপলক্ষে সবাইকে জানাই আন্তরিক শুভেচ্ছা');
-      setDesignation('সাধারণ সম্পাদক পদপ্রার্থী');
-      setFooterCredit('শুভেচ্ছান্তে: সর্বস্তরের জনগণ ও শুভানুধ্যায়ী');
+      setHeadlineBangla('পবিত্র ঈদুল ফিতরের অনাবিল আনন্দ ও শান্তির বারতা ছড়িয়ে পড়ুক প্রতিটি ঘরে—সবাইকে আন্তরিক ঈদ মোবারক।');
+      setDesignation('পবিত্র ঈদুল ফিতরের শুভেচ্ছা ও মোবারকবাদ');
+      setFooterCredit('শুভেচ্ছান্তে: সর্বস্তরের এলাকাবাসী');
     } else if (tpl.occasionType === 'condolence') {
-      setHeadlineBangla('১৫ আগস্ট জাতীয় শোক দিবস - বিনম্র শ্রদ্ধাঞ্জলি');
-      setDesignation('মরহুমের বিদেহী আত্মার মাগফিরাত কামনায়');
-      setFooterCredit('শোক প্রকাশে: সর্বস্তরের সহযোদ্ধা ও শুভাকাঙ্ক্ষী');
+      setHeadlineBangla('মরহুমের কর্মময় জীবনের আদর্শ ও নিঃস্বার্থ সমাজসেবাকে বিনম্র শ্রদ্ধায় স্মরণ করছি; আল্লাহ তাঁকে জান্নাত নসিব করুন।');
+      setDesignation('তাঁর বিদেহী আত্মার মাগফিরাত কামনা করছি');
+      setFooterCredit('শোক প্রকাশে: পরিবারবর্গ ও সর্বস্তরের শুভাকাঙ্ক্ষী');
     }
   };
 
@@ -227,6 +228,33 @@ function CreatePosterContent() {
       const filesArray = Array.from(e.target.files).slice(0, 3);
       setLeaderFiles(filesArray);
       setLeaderPhotoUrls(filesArray.map((f) => URL.createObjectURL(f)));
+    }
+  };
+
+  // Handle Instant AI Polish of Slogan
+  const handlePolishText = async () => {
+    setIsPolishing(true);
+    setError('');
+    try {
+      const res = await api.polishText({
+        occasionType: selectedTemplate.occasionType,
+        candidateName,
+        designation,
+        party,
+        area,
+        headlineBangla,
+      });
+      if (res.headlineBangla) {
+        setHeadlineBangla(res.headlineBangla);
+      }
+      if (res.footerCreditBangla && (!footerCredit || footerCredit.includes('এলাকাবাসী'))) {
+        setFooterCredit(res.footerCreditBangla);
+      }
+    } catch (err: any) {
+      console.warn('Text polish error:', err);
+      setError('স্লোগান পলিশ করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
+    } finally {
+      setIsPolishing(false);
     }
   };
 
@@ -346,6 +374,12 @@ function CreatePosterContent() {
       setIsGenerating(false);
     }
   };
+
+  const candSlot = selectedTemplate.layoutConfig?.candidateSlot || { x: 293, y: 364, width: 450, height: 450 };
+  const candCx = candSlot.x;
+  const candCy = candSlot.y;
+  const candR = candSlot.width / 2;
+  const candNameY = selectedTemplate.layoutConfig?.textSlots?.candidateName?.y || 585;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
@@ -567,30 +601,48 @@ function CreatePosterContent() {
 
             {/* 4. Slogan & Headline Customization */}
             <div className="space-y-3 pt-2">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-wrap items-center justify-between gap-2">
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
                   ৪. স্লোগান ও শিরোনাম
                 </label>
-                <label className="flex items-center gap-1.5 text-xs text-amber-400 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={useAiSlogans}
-                    onChange={(e) => setUseAiSlogans(e.target.checked)}
-                    className="w-3.5 h-3.5 rounded border-slate-700 text-emerald-600 focus:ring-emerald-500"
-                  />
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Gemini AI স্লোগান অপ্টিমাইজার চালু</span>
-                </label>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={handlePolishText}
+                    disabled={isPolishing}
+                    className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs font-semibold border border-amber-500/30 transition disabled:opacity-50 cursor-pointer shadow-sm"
+                    title="Gemini AI দিয়ে বিস্তারিত ও পরিমার্জিত স্লোগান তৈরি করুন"
+                  >
+                    {isPolishing ? (
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin text-amber-400" />
+                    ) : (
+                      <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    )}
+                    <span>{isPolishing ? 'পলিশ হচ্ছে...' : 'AI দিয়ে পলিশ করুন'}</span>
+                  </button>
+                  <label className="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={useAiSlogans}
+                      onChange={(e) => setUseAiSlogans(e.target.checked)}
+                      className="w-3.5 h-3.5 rounded border-slate-700 text-emerald-600 focus:ring-emerald-500"
+                    />
+                    <span>অটো অপ্টিমাইজ</span>
+                  </label>
+                </div>
               </div>
 
               <div>
                 <textarea
-                  rows={2}
+                  rows={3}
                   value={headlineBangla}
                   onChange={(e) => setHeadlineBangla(e.target.value)}
-                  placeholder="ব্যানারের প্রধান স্লোগান বা শিরোনাম..."
-                  className="w-full px-3.5 py-2.5 bg-slate-900/90 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition"
+                  placeholder="ব্যানারের প্রধান স্লোগান বা কোনো প্রাথমিক খসড়া ভাবনা..."
+                  className="w-full px-3.5 py-2.5 bg-slate-900/90 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition leading-relaxed"
                 />
+                <p className="text-[11px] text-slate-400 mt-1">
+                  💡 কোনো প্রাথমিক চিন্তা বা বিষয় লিখে <span className="text-amber-400 font-semibold">&apos;AI দিয়ে পলিশ করুন&apos;</span> চাপলে Gemini তা বিস্তারিত ও মার্জিত স্লোগানে রূপান্তর করবে।
+                </p>
               </div>
 
               <div>
@@ -676,7 +728,15 @@ function CreatePosterContent() {
                   }}
                 >
                   {/* Dynamic Candidate Photo on Left */}
-                  <div className="absolute left-[8%] top-[22%] w-[28%] aspect-square rounded-full border-2 border-amber-400 overflow-hidden shadow-lg bg-black/40 flex items-center justify-center">
+                  <div
+                    className="absolute rounded-full border-2 border-amber-400 overflow-hidden shadow-lg bg-black/40 flex items-center justify-center -translate-x-1/2 -translate-y-1/2"
+                    style={{
+                      left: `${(candCx / 1200) * 100}%`,
+                      top: `${(candCy / 800) * 100}%`,
+                      width: `${((candR * 2) / 1200) * 100}%`,
+                      aspectRatio: '1 / 1',
+                    }}
+                  >
                     {candidatePhotoUrl ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -693,7 +753,14 @@ function CreatePosterContent() {
                   </div>
 
                   {/* Candidate Name in Left Brush Banner */}
-                  <div className="absolute left-[4%] top-[74%] w-[36%] text-center px-1">
+                  <div
+                    className="absolute text-center px-1 -translate-x-1/2"
+                    style={{
+                      left: `${((candCx - 40) / 1200) * 100}%`,
+                      top: `${((candNameY - 18) / 800) * 100}%`,
+                      width: '36%',
+                    }}
+                  >
                     <div className="text-xs md:text-sm font-bold text-white truncate drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                       {candidateName || 'প্রার্থীর নাম'}
                     </div>
@@ -754,8 +821,8 @@ function CreatePosterContent() {
                     </span>
                     <span
                       className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${(generatedPoster.regenerationCount || 0) >= 3
-                          ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
-                          : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                        ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
+                        : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
                         }`}
                     >
                       বাকি আছে: {Math.max(0, 3 - (generatedPoster.regenerationCount || 0))}/৩ বার

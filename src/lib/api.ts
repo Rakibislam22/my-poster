@@ -222,6 +222,26 @@ class ApiClient {
       method: 'DELETE',
     });
   }
+
+  async polishText(payload: {
+    occasionType: string;
+    candidateName?: string;
+    designation?: string;
+    party?: string;
+    area?: string;
+    headlineBangla?: string;
+    customNotes?: string;
+  }): Promise<{
+    headlineBangla: string;
+    footerCreditBangla?: string;
+    campaignMarka?: string;
+    isAiGenerated: boolean;
+  }> {
+    return this.request('/posters/polish-text', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  }
 }
 
 export const api = new ApiClient();
