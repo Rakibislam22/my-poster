@@ -144,24 +144,35 @@ export const AuthModal: React.FC = () => {
           </button>
         </form>
 
-        <div className="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+        {/* Dedicated 1-Click Demo Login Button */}
+        <div className="mt-5 pt-4 border-t border-slate-800">
+          <div className="relative flex items-center justify-center mb-3">
+            <span className="text-[11px] font-medium text-slate-400 uppercase tracking-wider bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+              অথবা সরাসরি টেস্ট করতে
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleDemoLogin}
+            disabled={loading}
+            className="w-full py-2.5 px-4 bg-amber-500/15 hover:bg-amber-500/25 active:scale-[0.99] text-amber-300 font-bold rounded-xl border border-amber-500/40 shadow-lg shadow-amber-950/30 transition flex items-center justify-center gap-2 text-sm cursor-pointer disabled:opacity-50"
+          >
+            <Sparkles className="w-4 h-4 text-amber-400" />
+            <span>১-ক্লিকে ডেমো লগইন (1-Click Demo Login)</span>
+          </button>
+        </div>
+
+        <div className="mt-4 text-center">
           <button
             type="button"
             onClick={() => {
               setIsRegister(!isRegister);
               setError('');
             }}
-            className="hover:text-emerald-400 font-medium transition"
+            className="text-xs text-slate-400 hover:text-emerald-400 font-medium transition"
           >
             {isRegister ? 'ইতিমধ্যে অ্যাকাউন্ট আছে? সাইন ইন করুন' : 'অ্যাকাউন্ট নেই? নতুন অ্যাকাউন্ট খুলুন'}
-          </button>
-
-          <button
-            type="button"
-            onClick={handleDemoLogin}
-            className="text-amber-400 hover:text-amber-300 underline font-medium"
-          >
-            কুইক ডেমো লগইন
           </button>
         </div>
       </div>

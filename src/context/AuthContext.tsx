@@ -12,6 +12,7 @@ interface AuthContextType {
   closeAuthModal: () => void;
   login: (identifier: string, pass: string) => Promise<void>;
   register: (name: string, emailOrPhone: string, pass: string) => Promise<void>;
+  loginDemo: () => Promise<void>;
   logout: () => void;
 }
 
@@ -64,6 +65,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsAuthModalOpen(false);
   };
 
+  const loginDemo = async () => {
+    const demoEmail = 'user@posterbabu.bd';
+    const demoPass = 'poster1234';
+    try {
+      await login(demoEmail, demoPass);
+    } catch {
+      await register('ডেমো ইউজার (রাকিব)', demoEmail, demoPass);
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem('poster_token');
     setToken(null);
@@ -81,6 +92,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         closeAuthModal: () => setIsAuthModalOpen(false),
         login,
         register,
+        loginDemo,
         logout,
       }}
     >
