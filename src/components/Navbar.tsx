@@ -14,6 +14,7 @@ import {
   LogOut,
   Menu,
   PlusCircle,
+  ShieldCheck,
   Sparkles,
   User as UserIcon,
   X,
@@ -38,6 +39,7 @@ export const Navbar: React.FC = () => {
     { id: 'templates', label: 'টেমপ্লেট গ্যালারি', href: '/templates', icon: LayoutGrid },
     { id: 'create', label: 'পোস্টার তৈরি করুন', href: '/templates', icon: PlusCircle, highlight: true },
     { id: 'my-posters', label: 'আমার পোস্টার', href: '/my-posters', icon: FolderArchive, authRequired: true },
+    { id: 'admin', label: 'অ্যাডমিন প্যানেল', href: '/admin', icon: ShieldCheck, adminOnly: true },
   ];
 
   return (
@@ -65,6 +67,7 @@ export const Navbar: React.FC = () => {
             <nav className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => {
                 if (link.authRequired && !user) return null;
+                if (link.adminOnly && user?.role !== 'admin') return null;
                 const isActive = pathname === link.href && (!link.highlight || pathname === '/create');
 
                 if (link.highlight) {
@@ -86,7 +89,9 @@ export const Navbar: React.FC = () => {
                     href={link.href}
                     className={`px-3 py-2 rounded-lg text-sm font-medium transition ${isActive
                       ? 'text-emerald-400 bg-emerald-500/10'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-900'
+                      : link.adminOnly
+                        ? 'text-rose-400 hover:text-rose-300 hover:bg-rose-500/10'
+                        : 'text-slate-300 hover:text-white hover:bg-slate-900'
                       }`}
                   >
                     {link.label}
@@ -108,7 +113,7 @@ export const Navbar: React.FC = () => {
                         {user.name}
                       </span>
                       <span className="text-[10px] text-slate-400">
-                        {user.role === 'admin' ? 'অ্যাডমিন' : 'সদস্য'}
+                        {user.role === 'admin' ? 'সুপার অ্যাডমিন' : 'সদস্য'}
                       </span>
                     </div>
                   </div>
@@ -165,6 +170,7 @@ export const Navbar: React.FC = () => {
           <div className="md:hidden border-b border-slate-800 bg-slate-950/95 backdrop-blur-xl px-4 pt-2 pb-4 space-y-2">
             {navLinks.map((link) => {
               if (link.authRequired && !user) return null;
+              if (link.adminOnly && user?.role !== 'admin') return null;
               return (
                 <Link
                   key={link.id}

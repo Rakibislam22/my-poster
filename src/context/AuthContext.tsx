@@ -13,6 +13,7 @@ interface AuthContextType {
   login: (identifier: string, pass: string) => Promise<void>;
   register: (name: string, emailOrPhone: string, pass: string) => Promise<void>;
   loginDemo: () => Promise<void>;
+  loginAdmin: () => Promise<void>;
   logout: () => void;
 }
 
@@ -75,6 +76,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const loginAdmin = async () => {
+    const adminEmail = 'admin@posterbabu.bd';
+    const adminPass = 'admin1234';
+    await login(adminEmail, adminPass);
+  };
+
   const logout = () => {
     localStorage.removeItem('poster_token');
     setToken(null);
@@ -93,6 +100,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         login,
         register,
         loginDemo,
+        loginAdmin,
         logout,
       }}
     >

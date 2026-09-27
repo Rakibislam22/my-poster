@@ -142,17 +142,20 @@ export default function MyPostersPage() {
           ))}
         </div>
       ) : posters.length === 0 ? (
-        <div className="p-12 text-center rounded-2xl glass-panel border border-slate-800 space-y-4 max-w-md mx-auto">
-          <Sparkles className="w-10 h-10 text-emerald-400 mx-auto" />
-          <h3 className="text-base font-bold text-white">এখনও কোনো পোস্টার তৈরি করা হয়নি</h3>
-          <p className="text-xs text-slate-400">
+        <div className="py-20 px-8 text-center rounded-2xl glass-panel border border-slate-800 space-y-4 max-w-lg mx-auto min-h-[380px] flex flex-col items-center justify-center">
+          <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-2">
+            <Sparkles className="w-7 h-7 text-emerald-400" />
+          </div>
+          <h3 className="text-lg font-bold text-white">এখনও কোনো পোস্টার তৈরি করা হয়নি</h3>
+          <p className="text-sm text-slate-400 max-w-sm mx-auto leading-relaxed">
             পোস্টার ক্রিয়েটরে গিয়ে আপনার প্রথম বিজয় দিবস বা নির্বাচনী পোস্টার তৈরি করুন।
           </p>
           <Link
             href="/create"
-            className="inline-block px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition shadow-lg shadow-emerald-950/40"
           >
-            পোস্টার তৈরি করুন
+            <PlusCircle className="w-4 h-4" />
+            <span>পোস্টার তৈরি করুন</span>
           </Link>
         </div>
       ) : (

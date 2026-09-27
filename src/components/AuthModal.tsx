@@ -3,10 +3,10 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { notify } from '@/lib/notify';
-import { Lock, Mail, Phone, Sparkles, User as UserIcon, X } from 'lucide-react';
+import { Lock, Mail, Phone, ShieldCheck, Sparkles, User as UserIcon, X } from 'lucide-react';
 
 export const AuthModal: React.FC = () => {
-  const { isAuthModalOpen, closeAuthModal, login, register } = useAuth();
+  const { isAuthModalOpen, closeAuthModal, login, register, loginAdmin } = useAuth();
   const [isRegister, setIsRegister] = useState(false);
   const [name, setName] = useState('');
   const [identifier, setIdentifier] = useState('');
@@ -52,6 +52,19 @@ export const AuthModal: React.FC = () => {
       notify.success('ডেমো অ্যাকাউন্টে সফলভাবে লগইন হয়েছে!');
     } catch (err: any) {
       setError(err.message || 'ডেমো লগইন ব্যর্থ হয়েছে');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAdminLogin = async () => {
+    setError('');
+    setLoading(true);
+    try {
+      await loginAdmin();
+      notify.success('সুপার অ্যাডমিন হিসেবে সফলভাবে লগইন হয়েছে!');
+    } catch (err: any) {
+      setError(err.message || 'অ্যাডমিন লগইন ব্যর্থ হয়েছে');
     } finally {
       setLoading(false);
     }
@@ -156,15 +169,27 @@ export const AuthModal: React.FC = () => {
             </span>
           </div>
 
-          <button
-            type="button"
-            onClick={handleDemoLogin}
-            disabled={loading}
-            className="w-full py-2.5 px-4 bg-amber-500/15 hover:bg-amber-500/25 active:scale-[0.99] text-amber-300 font-bold rounded-xl border border-amber-500/40 shadow-lg shadow-amber-950/30 transition flex items-center justify-center gap-2 text-sm cursor-pointer disabled:opacity-50"
-          >
-            <Sparkles className="w-4 h-4 text-amber-400" />
-            <span>১-ক্লিকে ডেমো লগইন (1-Click Demo Login)</span>
-          </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={handleDemoLogin}
+              disabled={loading}
+              className="w-full py-2.5 px-3 bg-amber-500/15 hover:bg-amber-500/25 active:scale-[0.99] text-amber-300 font-bold rounded-xl border border-amber-500/40 shadow-lg shadow-amber-950/30 transition flex items-center justify-center gap-1.5 text-xs cursor-pointer disabled:opacity-50"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>ইউজার ডেমো লগইন</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleAdminLogin}
+              disabled={loading}
+              className="w-full py-2.5 px-3 bg-rose-500/15 hover:bg-rose-500/25 active:scale-[0.99] text-rose-300 font-bold rounded-xl border border-rose-500/40 shadow-lg shadow-rose-950/30 transition flex items-center justify-center gap-1.5 text-xs cursor-pointer disabled:opacity-50"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-rose-400" />
+              <span>অ্যাডমিন ডেমো লগইন</span>
+            </button>
+          </div>
         </div>
 
         <div className="mt-4 text-center">

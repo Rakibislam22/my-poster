@@ -62,9 +62,11 @@ export interface Template {
   isActive: boolean;
 }
 
+export type ModerationStatus = 'pending' | 'approved' | 'rejected' | 'flagged';
+
 export interface Poster {
   _id: string;
-  userId: string;
+  userId: string | { _id?: string; id?: string; name: string; email?: string; role?: string; phone?: string };
   templateId: Template | string;
   formData: {
     occasionType?: string;
@@ -83,10 +85,46 @@ export interface Poster {
   generatedImageUrl?: string;
   previewUrl?: string;
   status: 'pending' | 'processing' | 'completed' | 'failed';
+  moderationStatus?: ModerationStatus;
+  moderationNotes?: string;
+  flaggedReason?: string;
+  moderatedBy?: { _id?: string; name: string; email?: string };
+  moderatedAt?: string;
   regenerationCount?: number;
   remainingRetries?: number;
   errorMessage?: string;
   createdAt: string;
+}
+
+export interface AdminOverview {
+  stats: {
+    totalPosters: number;
+    pendingModeration: number;
+    approvedPosters: number;
+    rejectedPosters: number;
+    flaggedPosters: number;
+    totalTemplates: number;
+    activeTemplates: number;
+    totalUsers: number;
+  };
+  recentPosters: Poster[];
+}
+
+export interface ModerationQueueResult {
+  posters: Poster[];
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+  counts: {
+    all: number;
+    pending: number;
+    approved: number;
+    rejected: number;
+    flagged: number;
+  };
 }
 
 class ApiClient {
@@ -240,6 +278,59 @@ class ApiClient {
     return this.request('/posters/polish-text', {
       method: 'POST',
       body: JSON.stringify(payload),
+    });
+  }
+
+  // --- Admin APIs ---
+  async getAdminOverview(): Promise<AdminOverview> {
+    return this.request('/admin/overview');
+  }
+
+  async getModerationQueue(params?: {
+    page?: number;
+    limit?: number;
+    status?: string;
+    search?: string;
+  }): Promise<ModerationQueueResult> {
+    const searchParams = new URLSearchParams();
+    if (params?.page) searchParams.set('page', params.page.toString());
+    if (params?.limit) searchParams.set('limit', params.limit.toString());
+    if (params?.status && params.status !== 'all') searchParams.set('status', params.status);
+    if (params?.search) searchParams.set('search', params.search);
+
+    const query = searchParams.toString() ? `?${searchParams.toString()}` : '';
+    return this.request(`/admin/moderation/queue${query}`);
+  }
+
+  async updatePosterModeration(
+    id: string,
+    payload: {
+      status: ModerationStatus;
+      moderationNotes?: string;
+      flaggedReason?: string;
+    }
+  ): Promise<Poster> {
+    return this.request(`/admin/moderation/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(payload),
+    });
+  }
+
+  async deletePosterByAdmin(id: string): Promise<{ id: string }> {
+    return this.request(`/admin/moderation/${id}`, {
+      method: 'DELETE',
+    });
+  }
+
+  async reseedTemplates(): Promise<{ count: number; templates: Template[] }> {
+    return this.request('/admin/templates/reseed', {
+      method: 'POST',
+    });
+  }
+
+  async toggleTemplateStatus(id: string): Promise<Template> {
+    return this.request(`/admin/templates/${id}/toggle`, {
+      method: 'PATCH',
     });
   }
 }
