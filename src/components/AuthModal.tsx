@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { notify } from '@/lib/notify';
 import { Lock, Mail, Phone, Sparkles, User as UserIcon, X } from 'lucide-react';
 
 export const AuthModal: React.FC = () => {
@@ -24,8 +25,10 @@ export const AuthModal: React.FC = () => {
       if (isRegister) {
         if (!name.trim()) throw new Error('নাম প্রদান করুন');
         await register(name, identifier, password);
+        notify.success('অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!');
       } else {
         await login(identifier, password);
+        notify.success('সফলভাবে লগইন হয়েছে!');
       }
     } catch (err: any) {
       setError(err.message || 'একটি ত্রুটি ঘটেছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
@@ -46,6 +49,7 @@ export const AuthModal: React.FC = () => {
       } catch {
         await register('ডেমো ইউজার (রাকিব)', demoEmail, demoPass);
       }
+      notify.success('ডেমো অ্যাকাউন্টে সফলভাবে লগইন হয়েছে!');
     } catch (err: any) {
       setError(err.message || 'ডেমো লগইন ব্যর্থ হয়েছে');
     } finally {

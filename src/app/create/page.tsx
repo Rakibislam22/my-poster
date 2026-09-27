@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { api, Poster, Template } from '@/lib/api';
 import { downloadPosterImage } from '@/lib/download';
+import { notify } from '@/lib/notify';
 import { useAuth } from '@/context/AuthContext';
 import {
   AlertCircle,
@@ -254,9 +255,11 @@ function CreatePosterContent() {
       if (res.footerCreditBangla && (!footerCredit || footerCredit.includes('এলাকাবাসী'))) {
         setFooterCredit(res.footerCreditBangla);
       }
+      notify.success('AI দিয়ে স্লোগান সফলভাবে পলিশ করা হয়েছে!');
     } catch (err: any) {
       console.warn('Text polish error:', err);
       setError('স্লোগান পলিশ করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
+      notify.error('স্লোগান পলিশ করতে সমস্যা হয়েছে');
     } finally {
       setIsPolishing(false);
     }
@@ -269,12 +272,14 @@ function CreatePosterContent() {
 
     if (!candidateName.trim()) {
       setError('অনুগ্রহ করে প্রার্থীর নাম প্রদান করুন');
+      notify.warning('অনুগ্রহ করে প্রার্থীর নাম প্রদান করুন');
       return;
     }
 
     // Require authentication before generating poster
     if (!user) {
       setError('পোস্টার তৈরি করতে অনুগ্রহ করে প্রথমে সাইন ইন অথবা ডেমো লগইন করুন।');
+      notify.warning('পোস্টার তৈরি করতে অনুগ্রহ করে প্রথমে লগইন করুন');
       openAuthModal();
       return;
     }
@@ -329,9 +334,11 @@ function CreatePosterContent() {
         setHeadlineBangla(poster.formData.headlineBangla);
       }
       setProgressStage('');
+      notify.success('পোস্টার সফলভাবে তৈরি হয়েছে!');
     } catch (err: any) {
       console.error('Generation error:', err);
       setError(err.message || 'পোস্টার তৈরি করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
+      notify.error(err.message || 'পোস্টার তৈরি ব্যর্থ হয়েছে');
     } finally {
       setIsGenerating(false);
     }
@@ -352,6 +359,7 @@ function CreatePosterContent() {
     const currentRetries = generatedPoster.regenerationCount || 0;
     if (currentRetries >= maxRetries) {
       setError('সর্বোচ্চ ৩ বার পুনরায় তৈরি করার সীমা পূর্ণ হয়েছে। নতুন পোস্টার তৈরি করুন।');
+      notify.warning('সর্বোচ্চ ৩ বার রি-জেনারেটের সীমা পূর্ণ হয়েছে');
       return;
     }
 
@@ -374,9 +382,11 @@ function CreatePosterContent() {
         setHeadlineBangla(updatedPoster.formData.headlineBangla);
       }
       setProgressStage('');
+      notify.success('পোস্টার সফলভাবে রি-জেনারেট করা হয়েছে!');
     } catch (err: any) {
       console.error('Regeneration error:', err);
       setError(err.message || 'পোস্টার পুনরায় তৈরি করতে সমস্যা হয়েছে।');
+      notify.error(err.message || 'রি-জেনারেট করতে সমস্যা হয়েছে');
     } finally {
       setIsGenerating(false);
     }
@@ -386,14 +396,17 @@ function CreatePosterContent() {
   const handleDownload = async () => {
     if (!generatedPoster?.generatedImageUrl) return;
     setIsDownloading(true);
+    notify.info('পোস্টার ডাউনলোড শুরু হচ্ছে...');
     try {
       await downloadPosterImage(
         generatedPoster.generatedImageUrl,
         `poster-${candidateName.replace(/\s+/g, '_')}.png`,
         generatedPoster._id
       );
+      notify.success('পোস্টার সফলভাবে ডাউনলোড হয়েছে!');
     } catch (err) {
       console.error('Download error:', err);
+      notify.error('ডাউনলোড সম্পন্ন করা যায়নি');
     } finally {
       setIsDownloading(false);
     }

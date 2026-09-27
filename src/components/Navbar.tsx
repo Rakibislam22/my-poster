@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { AuthModal } from './AuthModal';
+import { confirmLogout } from '@/lib/alert';
+import { notify } from '@/lib/notify';
 import {
   FolderArchive,
   LayoutGrid,
@@ -21,6 +23,15 @@ export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const { user, logout, openAuthModal, loginDemo } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleLogout = async () => {
+    const confirmed = await confirmLogout();
+    if (confirmed) {
+      logout();
+      setMobileMenuOpen(false);
+      notify.info('সফলভাবে লগআউট করা হয়েছে');
+    }
+  };
 
   const navLinks = [
     { id: 'home', label: 'হোম', href: '/' },
@@ -103,9 +114,9 @@ export const Navbar: React.FC = () => {
                   </div>
 
                   <button
-                    onClick={logout}
+                    onClick={handleLogout}
                     title="লগআউট"
-                    className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-slate-900 transition"
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-slate-900 transition cursor-pointer"
                   >
                     <LogOut className="w-4 h-4" />
                   </button>
@@ -176,11 +187,8 @@ export const Navbar: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-slate-300">{user.name}</span>
                   <button
-                    onClick={() => {
-                      logout();
-                      setMobileMenuOpen(false);
-                    }}
-                    className="text-xs text-rose-400 hover:underline flex items-center gap-1"
+                    onClick={handleLogout}
+                    className="text-xs text-rose-400 hover:underline flex items-center gap-1 cursor-pointer"
                   >
                     <LogOut className="w-3.5 h-3.5" />
                     লগআউট

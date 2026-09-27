@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { api, Poster } from '@/lib/api';
 import { downloadPosterImage } from '@/lib/download';
+import { confirmDeletePoster } from '@/lib/alert';
+import { notify } from '@/lib/notify';
 import { useAuth } from '@/context/AuthContext';
 import {
   Calendar,
@@ -62,13 +64,16 @@ export default function MyPostersPage() {
     }
   }, [user]);
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('আপনি কি নিশ্চিত যে এই পোস্টারটি মুছে ফেলতে চান?')) return;
+  const handleDelete = async (id: string, candidateName?: string) => {
+    const confirmed = await confirmDeletePoster(candidateName);
+    if (!confirmed) return;
+
     try {
       await api.deletePoster(id);
       setPosters(posters.filter((p) => p._id !== id));
+      notify.success('পোস্টারটি সফলভাবে মুছে ফেলা হয়েছে');
     } catch (err: any) {
-      alert(err.message || 'পোস্টার মোছা যায়নি');
+      notify.error(err.message || 'পোস্টার মোছা যায়নি');
     }
   };
 
@@ -253,7 +258,7 @@ export default function MyPostersPage() {
                     )}
 
                     <button
-                      onClick={() => handleDelete(poster._id)}
+                      onClick={() => handleDelete(poster._id, poster.formData?.candidateName)}
                       className="w-full py-2 px-3 rounded-lg bg-slate-900 hover:bg-rose-950/60 text-slate-300 hover:text-rose-400 border border-slate-800 text-xs font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
