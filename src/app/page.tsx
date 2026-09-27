@@ -131,10 +131,10 @@ export default function HomePage() {
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
                 <Link
-                  href="/create"
+                  href="/templates"
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold text-base shadow-xl shadow-emerald-900/40 transition duration-150"
                 >
-                  <span>পোস্টার তৈরি শুরু করুন</span>
+                  <span>টেমপ্লেট বাছাই করে শুরু করুন</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
 
@@ -168,7 +168,7 @@ export default function HomePage() {
             <div className="lg:col-span-5 flex justify-center">
               <div className="relative group">
                 <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-rose-600 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition duration-300" />
-                
+
                 <div className="relative w-[320px] sm:w-[380px] p-4 glass-panel rounded-2xl border border-slate-700 shadow-2xl overflow-hidden">
                   <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-800 text-xs">
                     <span className="flex items-center gap-1.5 text-emerald-400 font-semibold">
@@ -222,10 +222,10 @@ export default function HomePage() {
                   <div className="mt-4 flex items-center justify-between pt-2">
                     <span className="text-xs text-slate-400">৮২ms-এ তৈরি সম্পন্ন</span>
                     <Link
-                      href="/create"
+                      href="/templates"
                       className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-400 hover:text-emerald-300"
                     >
-                      <span>নিজে তৈরি করুন</span>
+                      <span>টেমপ্লেট নির্বাচন করুন</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
@@ -364,10 +364,10 @@ export default function HomePage() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/create"
+              href="/templates"
               className="px-8 py-3.5 rounded-xl bg-white hover:bg-slate-100 text-emerald-900 font-bold text-sm shadow-xl transition"
             >
-              বিনামূল্যে পোস্টার তৈরি করুন
+              টেমপ্লেট বাছাই করুন
             </Link>
             <Link
               href="/templates"

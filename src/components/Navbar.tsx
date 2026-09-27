@@ -23,10 +23,10 @@ export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { label: 'হোম', href: '/' },
-    { label: 'টেমপ্লেট গ্যালারি', href: '/templates', icon: LayoutGrid },
-    { label: 'পোস্টার তৈরি করুন', href: '/create', icon: PlusCircle, highlight: true },
-    { label: 'আমার পোস্টার', href: '/my-posters', icon: FolderArchive, authRequired: true },
+    { id: 'home', label: 'হোম', href: '/' },
+    { id: 'templates', label: 'টেমপ্লেট গ্যালারি', href: '/templates', icon: LayoutGrid },
+    { id: 'create', label: 'পোস্টার তৈরি করুন', href: '/templates', icon: PlusCircle, highlight: true },
+    { id: 'my-posters', label: 'আমার পোস্টার', href: '/my-posters', icon: FolderArchive, authRequired: true },
   ];
 
   return (
@@ -54,12 +54,12 @@ export const Navbar: React.FC = () => {
             <nav className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => {
                 if (link.authRequired && !user) return null;
-                const isActive = pathname === link.href;
+                const isActive = pathname === link.href && (!link.highlight || pathname === '/create');
 
                 if (link.highlight) {
                   return (
                     <Link
-                      key={link.href}
+                      key={link.id}
                       href={link.href}
                       className="ml-2 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white text-sm font-semibold shadow-md shadow-emerald-900/30 transition duration-150"
                     >
@@ -71,11 +71,11 @@ export const Navbar: React.FC = () => {
 
                 return (
                   <Link
-                    key={link.href}
+                    key={link.id}
                     href={link.href}
                     className={`px-3 py-2 rounded-lg text-sm font-medium transition ${isActive
-                        ? 'text-emerald-400 bg-emerald-500/10'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-900'
+                      ? 'text-emerald-400 bg-emerald-500/10'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-900'
                       }`}
                   >
                     {link.label}
@@ -156,14 +156,14 @@ export const Navbar: React.FC = () => {
               if (link.authRequired && !user) return null;
               return (
                 <Link
-                  key={link.href}
+                  key={link.id}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={`block px-3 py-2.5 rounded-lg text-sm font-medium ${link.highlight
-                      ? 'bg-emerald-600 text-white font-semibold'
-                      : pathname === link.href
-                        ? 'bg-slate-900 text-emerald-400'
-                        : 'text-slate-300 hover:bg-slate-900'
+                    ? 'bg-emerald-600 text-white font-semibold'
+                    : pathname === link.href
+                      ? 'bg-slate-900 text-emerald-400'
+                      : 'text-slate-300 hover:bg-slate-900'
                     }`}
                 >
                   {link.label}
