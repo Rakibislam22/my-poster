@@ -1,8 +1,10 @@
 'use client';
 
 import React, { Suspense, useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { api, Poster, Template } from '@/lib/api';
+import { downloadPosterImage } from '@/lib/download';
 import { useAuth } from '@/context/AuthContext';
 import {
   AlertCircle,
@@ -12,6 +14,7 @@ import {
   Download,
   Eye,
   ImageIcon,
+  LayoutGrid,
   Maximize2,
   RefreshCw,
   Sparkles,
@@ -164,6 +167,7 @@ function CreatePosterContent() {
   const [generatedPoster, setGeneratedPoster] = useState<Poster | null>(null);
   const [error, setError] = useState<string>('');
   const [zoomModalOpen, setZoomModalOpen] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   // Sync form defaults with selected template theme
   const applyTemplateDefaults = (tpl: Template) => {
@@ -378,6 +382,23 @@ function CreatePosterContent() {
     }
   };
 
+  // Direct download handler without opening new tab
+  const handleDownload = async () => {
+    if (!generatedPoster?.generatedImageUrl) return;
+    setIsDownloading(true);
+    try {
+      await downloadPosterImage(
+        generatedPoster.generatedImageUrl,
+        `poster-${candidateName.replace(/\s+/g, '_')}.png`,
+        generatedPoster._id
+      );
+    } catch (err) {
+      console.error('Download error:', err);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   const candSlot = selectedTemplate.layoutConfig?.candidateSlot || { x: 293, y: 364, width: 450, height: 450 };
   const candCx = candSlot.x;
   const candCy = candSlot.y;
@@ -419,36 +440,47 @@ function CreatePosterContent() {
         {/* Left Column: Form Controls (7 cols) */}
         <div className="lg:col-span-7 glass-panel p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-6">
           <form onSubmit={handleGenerate} className="space-y-6">
-            {/* 1. Template Picker */}
-            <div className="space-y-2">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
-                ১. টেমপ্লেট নির্বাচন করুন
-              </label>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                {templates.map((tpl) => (
-                  <button
-                    key={tpl._id}
-                    type="button"
-                    onClick={() => applyTemplateDefaults(tpl)}
-                    className={`p-3 rounded-xl border text-left text-xs transition duration-150 flex flex-col justify-between h-20 ${selectedTemplate._id === tpl._id
-                      ? 'border-emerald-500 bg-emerald-500/15 text-white shadow-md'
-                      : 'border-slate-800 bg-slate-900/60 text-slate-400 hover:border-slate-700 hover:text-white'
-                      }`}
-                  >
-                    <span className="font-bold line-clamp-2">{tpl.title}</span>
-                    <span className="text-[10px] text-emerald-400 flex items-center gap-1 font-semibold">
-                      {selectedTemplate._id === tpl._id && <Check className="w-3 h-3" />}
-                      {tpl.occasionType}
-                    </span>
-                  </button>
-                ))}
+            {/* Selected Template Badge (Locked - No change option on generation page) */}
+            <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2.5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+                  <LayoutGrid className="w-3.5 h-3.5 text-emerald-400" />
+                  নির্বাচিত টেমপ্লেট
+                </span>
+                <Link
+                  href="/templates"
+                  className="text-[11px] text-emerald-400 hover:text-emerald-300 hover:underline flex items-center gap-1 transition font-medium"
+                >
+                  <span>অন্যান্য টেমপ্লেট গ্যালারি</span>
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-emerald-500/25 flex items-center justify-between gap-3 shadow-inner">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+                    <Check className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white leading-snug">
+                      {selectedTemplate.title}
+                    </h4>
+                    <p className="text-[11px] text-slate-400 mt-0.5">
+                      {selectedTemplate.canvasDimensions?.width || 1200}×{selectedTemplate.canvasDimensions?.height || 800} px HD • {selectedTemplate.layoutConfig?.leaderSlots?.length || 3} জন শীর্ষ নেতা স্লট
+                    </p>
+                  </div>
+                </div>
+
+                <span className="shrink-0 px-2.5 py-1 rounded-md text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                  লকড (Locked)
+                </span>
               </div>
             </div>
 
-            {/* 2. Candidate Information */}
+            {/* 1. Candidate Information */}
             <div className="space-y-3 pt-2">
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
-                ২. প্রার্থীর বিবরণ
+                ১. প্রার্থীর বিবরণ
               </label>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -501,10 +533,10 @@ function CreatePosterContent() {
               </div>
             </div>
 
-            {/* 3. Photo Uploads */}
+            {/* 2. Photo Uploads */}
             <div className="space-y-3 pt-2">
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
-                ৩. ছবি আপলোড (প্রার্থী ও শীর্ষ নেতা)
+                ২. ছবি আপলোড (প্রার্থী ও শীর্ষ নেতা)
               </label>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -602,11 +634,11 @@ function CreatePosterContent() {
               </div>
             </div>
 
-            {/* 4. Slogan & Headline Customization */}
+            {/* 3. Slogan & Headline Customization */}
             <div className="space-y-3 pt-2">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
-                  ৪. স্লোগান ও শিরোনাম
+                  ৩. স্লোগান ও শিরোনাম
                 </label>
                 <div className="flex items-center gap-3">
                   <button
@@ -842,16 +874,24 @@ function CreatePosterContent() {
             {/* Post-generation Download & Actions */}
             {generatedPoster?.generatedImageUrl && (
               <div className="space-y-3 pt-2">
-                <a
-                  href={generatedPoster.generatedImageUrl}
-                  download={`poster-${candidateName.replace(/\s+/g, '_')}.png`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-sm shadow-lg shadow-emerald-950/50 flex items-center justify-center gap-2 transition cursor-pointer"
+                <button
+                  type="button"
+                  onClick={handleDownload}
+                  disabled={isDownloading}
+                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-sm shadow-lg shadow-emerald-950/50 flex items-center justify-center gap-2 transition cursor-pointer disabled:opacity-75"
                 >
-                  <Download className="w-4 h-4" />
-                  <span>হাই-রেজ্যুলেশন PNG ডাউনলোড করুন</span>
-                </a>
+                  {isDownloading ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 animate-spin" />
+                      <span>ডাউনলোড হচ্ছে...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Download className="w-4 h-4" />
+                      <span>হাই-রেজ্যুলেশন PNG সরাসরি ডাউনলোড করুন</span>
+                    </>
+                  )}
+                </button>
 
                 {/* Regenerate Section (Tweak Text & Regenerate with limited retries) */}
                 <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2.5">
@@ -912,12 +952,23 @@ function CreatePosterContent() {
       {zoomModalOpen && generatedPoster?.generatedImageUrl && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md animate-in fade-in">
           <div className="relative max-w-4xl max-h-[90vh] w-full flex flex-col items-center">
-            <button
-              onClick={() => setZoomModalOpen(false)}
-              className="absolute -top-12 right-0 p-2 text-slate-400 hover:text-white rounded-lg bg-slate-900 border border-slate-700"
-            >
-              <X className="w-6 h-6" />
-            </button>
+            <div className="absolute -top-12 right-0 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleDownload}
+                disabled={isDownloading}
+                className="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 transition shadow cursor-pointer"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>{isDownloading ? 'ডাউনলোড হচ্ছে...' : 'ডাউনলোড'}</span>
+              </button>
+              <button
+                onClick={() => setZoomModalOpen(false)}
+                className="p-2 text-slate-400 hover:text-white rounded-lg bg-slate-900 border border-slate-700 cursor-pointer"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={generatedPoster.generatedImageUrl}

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { api, Poster } from '@/lib/api';
+import { downloadPosterImage } from '@/lib/download';
 import { useAuth } from '@/context/AuthContext';
 import {
   Calendar,
@@ -11,6 +12,7 @@ import {
   FolderArchive,
   Maximize2,
   PlusCircle,
+  RefreshCw,
   Sparkles,
   Trash2,
   X,
@@ -21,6 +23,24 @@ export default function MyPostersPage() {
   const [posters, setPosters] = useState<Poster[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeZoomUrl, setActiveZoomUrl] = useState<string | null>(null);
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
+
+  const handleDownload = async (poster: Poster) => {
+    if (!poster.generatedImageUrl) return;
+    setDownloadingId(poster._id);
+    try {
+      const candidateName = poster.formData?.candidateName || 'poster';
+      await downloadPosterImage(
+        poster.generatedImageUrl,
+        `poster-${candidateName.replace(/\s+/g, '_')}.png`,
+        poster._id
+      );
+    } catch (err) {
+      console.error('Download error:', err);
+    } finally {
+      setDownloadingId(null);
+    }
+  };
 
   const fetchPosters = async () => {
     setLoading(true);
@@ -212,16 +232,24 @@ export default function MyPostersPage() {
 
                   <div className="grid grid-cols-2 gap-2 pt-1">
                     {poster.generatedImageUrl && (
-                      <a
-                        href={poster.generatedImageUrl}
-                        download={`poster-${poster.formData?.candidateName || 'download'}.png`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="w-full py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition shadow cursor-pointer"
+                      <button
+                        type="button"
+                        onClick={() => handleDownload(poster)}
+                        disabled={downloadingId === poster._id}
+                        className="w-full py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition shadow cursor-pointer disabled:opacity-75"
                       >
-                        <Download className="w-3.5 h-3.5" />
-                        <span>ডাউনলোড</span>
-                      </a>
+                        {downloadingId === poster._id ? (
+                          <>
+                            <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                            <span>ডাউনলোড হচ্ছে...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Download className="w-3.5 h-3.5" />
+                            <span>ডাউনলোড</span>
+                          </>
+                        )}
+                      </button>
                     )}
 
                     <button
@@ -243,12 +271,30 @@ export default function MyPostersPage() {
       {activeZoomUrl && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md animate-in fade-in">
           <div className="relative max-w-4xl max-h-[90vh] w-full flex flex-col items-center">
-            <button
-              onClick={() => setActiveZoomUrl(null)}
-              className="absolute -top-12 right-0 p-2 text-slate-400 hover:text-white rounded-lg bg-slate-900 border border-slate-700"
-            >
-              <X className="w-6 h-6" />
-            </button>
+            <div className="absolute -top-12 right-0 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={async () => {
+                  const targetPoster = posters.find((p) => p.generatedImageUrl === activeZoomUrl);
+                  if (targetPoster) {
+                    await handleDownload(targetPoster);
+                  } else {
+                    await downloadPosterImage(activeZoomUrl, 'poster.png');
+                  }
+                }}
+                disabled={Boolean(downloadingId)}
+                className="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 transition shadow cursor-pointer"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>{downloadingId ? 'ডাউনলোড হচ্ছে...' : 'ডাউনলোড'}</span>
+              </button>
+              <button
+                onClick={() => setActiveZoomUrl(null)}
+                className="p-2 text-slate-400 hover:text-white rounded-lg bg-slate-900 border border-slate-700 cursor-pointer"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={activeZoomUrl}
