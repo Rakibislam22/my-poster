@@ -658,7 +658,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Call To Action Banner */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
         <div className="relative rounded-3xl overflow-hidden p-8 sm:p-14 bg-gradient-to-r from-emerald-950 via-emerald-900 to-slate-950 border border-emerald-500/30 text-center space-y-6 shadow-2xl">
           <div className="max-w-2xl mx-auto space-y-3">
