@@ -884,7 +884,6 @@ function CreatePosterContent() {
               )}
             </div>
 
-            {/* Post-generation Download & Actions */}
             {generatedPoster?.generatedImageUrl && (
               <div className="space-y-3 pt-2">
                 <button
