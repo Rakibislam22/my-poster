@@ -182,7 +182,6 @@ export default function MyPostersPage() {
                 key={poster._id}
                 className="group flex flex-col justify-between glass-panel rounded-2xl border border-slate-800 hover:border-slate-700 overflow-hidden shadow-lg transition duration-200 hover:-translate-y-1 hover:shadow-2xl"
               >
-                {/* Poster Image: 100% matched to 3:2 landscape canvas (1200x800) */}
                 <div className="relative aspect-[3/2] w-full bg-slate-950 overflow-hidden border-b border-slate-800">
                   {poster.generatedImageUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
