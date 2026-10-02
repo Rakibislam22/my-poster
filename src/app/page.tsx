@@ -275,7 +275,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right Column: Live Interactive Mockup Showcase */}
             <div className="lg:col-span-5 flex flex-col items-center">
               {/* Interactive Tabs */}
               <div className="w-full max-w-[380px] mb-3 p-1 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between gap-1 text-[11px] font-semibold">
@@ -309,7 +308,6 @@ export default function HomePage() {
                 </button>
               </div>
 
-              {/* Showcase Poster Card */}
               <div className="relative group w-full max-w-[380px]">
                 <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-rose-600 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition duration-300" />
 
