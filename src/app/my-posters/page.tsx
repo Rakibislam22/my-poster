@@ -215,7 +215,6 @@ export default function MyPostersPage() {
                   )}
                 </div>
 
-                {/* Info & Actions */}
                 <div className="p-4 space-y-3">
                   <div>
                     <h3 className="text-sm font-bold text-white line-clamp-1">
