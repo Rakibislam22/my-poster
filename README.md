@@ -22,6 +22,7 @@ In Bangladesh, creating posters for election campaigns, victory days, religious 
 ## ✨ Key Features & Architecture
 
 ### 1. 🚀 Modern Landing & Exploration (`/`)
+
 - **Hero & Dynamic Occasion Switcher**: Interactive showcase featuring live previews for:
   - **মহান বিজয় দিবস (Victory Day)**: 16th December red-and-green tribute with National Memorial motifs.
   - **নির্বাচনী প্রচারণা ও দোয়া প্রার্থী (Election Campaign)**: Parliament, City Corporation, Upazila & Ward election layouts with party symbol and 3 leadership slots.
@@ -31,12 +32,14 @@ In Bangladesh, creating posters for election campaigns, victory days, religious 
 - **Frictionless Demo Access**: Instant 1-click guest login directly from the navigation bar or auth modal.
 
 ### 2. 🖼️ Template Discovery Hub (`/templates`)
+
 - **Calibrated Aspect Ratio (3:2 / 1200×800)**: Standardized dimensions engineered for both digital social media sharing and high-res print outputs.
 - **Occasion Filtering**: Fast filtering by category (`all`, `victory_day`, `campaign`, `eid`, `condolence`).
 - **Slot Metadata Preview**: Transparent display of available leader slots, dimensions, and typography settings before entering the studio.
 - **Direct Creator Handoff**: Deep links directly to `/create?templateId={id}` with selected template parameters locked.
 
 ### 3. 🛠️ AI Poster Creator Studio (`/create`)
+
 - **Multi-Slot Portrait Uploader**:
   - **Primary Candidate Slot**: Centered portrait upload with automatic circular/curved masking and bottom blend.
   - **Party Leadership Slots**: Dynamic uploader supporting 1 to 3 top-tier party leaders matching template coordinates.
@@ -52,7 +55,9 @@ In Bangladesh, creating posters for election campaigns, victory days, religious 
 - **Full-Screen Lightbox Modal**: High-res preview with zoom controls to inspect typography and portrait alignment before downloading.
 
 ### 4. ⚡ 5-Tier Resilient Download Engine (`src/lib/download.ts`)
+
 To eliminate browser pop-up blockers, blank tabs (`about:blank`), and cross-origin download issues, our unified download manager applies a 5-tier fallback strategy:
+
 1. **Tier 1 — Native Blob Fetch**: Fetches image bytes as a binary `Blob`, creates a same-origin `blob:` URL, and triggers an programmatic HTML5 `<a>` click. The browser strictly respects the `download` attribute without opening new tabs.
 2. **Tier 2 — Server Attachment Route**: Falls back to the backend `/posters/:id/download` route with HTTP `Content-Disposition: attachment`.
 3. **Tier 3 — Cloudinary URL Transformation**: Rewrites Cloudinary URLs dynamically to inject `fl_attachment:poster-[name]`.
@@ -60,6 +65,7 @@ To eliminate browser pop-up blockers, blank tabs (`about:blank`), and cross-orig
 5. **Tier 5 — Clean Anchor Fallback**: Direct link download fallback.
 
 ### 5. 📂 My Posters Dashboard (`/my-posters`)
+
 - **Personal Poster Gallery**: Chronological grid of all user-generated posters with timestamp and occasion tags.
 - **Real-Time Moderation Status Badges**:
   - `অপেক্ষমান (Pending)` — Slate/Amber pulse indicator.
@@ -70,6 +76,7 @@ To eliminate browser pop-up blockers, blank tabs (`about:blank`), and cross-orig
 - **1-Click Redownload & Lightbox**: Instant re-downloading with custom timestamped filenames (`poster-[candidate_name].png`).
 
 ### 6. 🛡️ Super Admin Control Center (`/admin`)
+
 - **Role-Based Security & 1-Click Testing**: Admin route guard with instant 1-click admin login button for testing environments.
 - **Real-Time Analytics KPI Cards**: Live counters for Total Posters, Pending Moderation Queue, Approved, Rejected, Flagged, Total/Active Templates, and Registered Users.
 - **Content Moderation Queue**:
@@ -84,6 +91,7 @@ To eliminate browser pop-up blockers, blank tabs (`about:blank`), and cross-orig
 - **Zero-Flicker Architecture**: Multi-tab interface mounted persistently in the DOM with skeleton pulse loaders and stable scroll gutters (`scrollbar-gutter: stable; overflow-y: scroll;`).
 
 ### 7. 🔔 Unified Feedback & Notification System
+
 - **Centralized Toast System (`src/lib/notify.ts`)**: Built on `react-toastify` with dark-glassmorphism theme:
   - `notify.success()` — Emerald themed alert.
   - `notify.error()` — Rose themed alert.
@@ -93,6 +101,7 @@ To eliminate browser pop-up blockers, blank tabs (`about:blank`), and cross-orig
   - Accessible, keyboard-navigable confirmation modals for **Logout** and **Permanent Poster Deletion**.
 
 ### 8. 🔐 Authentication & Session Provider (`src/context/AuthContext.tsx`)
+
 - **Stateless JWT Management**: Automatic token storage in `localStorage` (`poster_token`) with Bearer header injection across all API requests.
 - **AuthModal**: Tabbed interface for regular email/password login and new user registration.
 - **Quick Onboarding Buttons**: Built-in 1-click **Demo User Login** and **Demo Admin Login** for effortless stakeholder evaluation.
@@ -101,17 +110,17 @@ To eliminate browser pop-up blockers, blank tabs (`about:blank`), and cross-orig
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology | Version | Description |
-| :--- | :--- | :--- | :--- |
-| **Framework** | **Next.js** | `16.3.6` | App Router, Server Components & Turbopack |
-| **Library** | **React** | `19.2.8` | Modern concurrent UI architecture |
-| **Language** | **TypeScript** | `5.x` | Strict type safety and end-to-end schema alignment |
-| **Styling** | **Tailwind CSS** | `v4.x` | Next-gen CSS engine with custom `@theme` variables |
-| **Typography** | **Google Fonts** | — | `Hind Siliguri` (Bengali) & `Inter` (UI Sans) |
-| **Icons** | **Lucide React** | `^1.48.0` | Modern, clean vector iconography |
-| **Notifications** | **React-Toastify** | `^11.1.0` | Dark-glassmorphism feedback toasts |
-| **Dialogs** | **SweetAlert2** | `^11.26.25` | Themed modal confirmations |
-| **AI Engine** | **Google Gemini** | — | Bengali slogan generation & text polishing |
+| Layer             | Technology         | Version     | Description                                        |
+| :---------------- | :----------------- | :---------- | :------------------------------------------------- |
+| **Framework**     | **Next.js**        | `16.3.6`    | App Router, Server Components & Turbopack          |
+| **Library**       | **React**          | `19.2.8`    | Modern concurrent UI architecture                  |
+| **Language**      | **TypeScript**     | `5.x`       | Strict type safety and end-to-end schema alignment |
+| **Styling**       | **Tailwind CSS**   | `v4.x`      | Next-gen CSS engine with custom `@theme` variables |
+| **Typography**    | **Google Fonts**   | —           | `Hind Siliguri` (Bengali) & `Inter` (UI Sans)      |
+| **Icons**         | **Lucide React**   | `^1.48.0`   | Modern, clean vector iconography                   |
+| **Notifications** | **React-Toastify** | `^11.1.0`   | Dark-glassmorphism feedback toasts                 |
+| **Dialogs**       | **SweetAlert2**    | `^11.26.25` | Themed modal confirmations                         |
+| **AI Engine**     | **Google Gemini**  | —           | Bengali slogan generation & text polishing         |
 
 ---
 
@@ -155,11 +164,13 @@ my-poster/
 ## ⚙️ Getting Started & Installation
 
 ### 1. Prerequisites
+
 - **Node.js**: `v20.x` or `v22.x` (LTS recommended)
 - **Package Manager**: `npm` (v10+), `yarn`, or `pnpm`
 - **Backend Service**: Running instance of `my-poster-backend` (Default: `http://localhost:5000/api`)
 
 ### 2. Environment Setup
+
 Create a `.env.local` file in the root directory:
 
 ```env
@@ -168,6 +179,7 @@ NEXT_PUBLIC_API_URL=http://localhost:5000/api
 ```
 
 ### 3. Installation
+
 Install project dependencies:
 
 ```bash
@@ -176,6 +188,7 @@ npm install
 ```
 
 ### 4. Running Development Server
+
 Start the Turbopack development server:
 
 ```bash
@@ -186,14 +199,14 @@ Visit **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 ---
 
-## 📜 Available Scripts
+## Available Scripts
 
-| Command | Purpose |
-| :--- | :--- |
-| `npm run dev` | Runs the Next.js development server with Turbopack on port `3000` |
-| `npm run build` | Compiles an optimized, type-checked production build |
-| `npm run start` | Starts the production server |
-| `npm run lint` | Executes ESLint checks across all TypeScript and React components |
+| Command         | Purpose                                                           |
+| :-------------- | :---------------------------------------------------------------- |
+| `npm run dev`   | Runs the Next.js development server with Turbopack on port `3000` |
+| `npm run build` | Compiles an optimized, type-checked production build              |
+| `npm run start` | Starts the production server                                      |
+| `npm run lint`  | Executes ESLint checks across all TypeScript and React components |
 
 ---
 
@@ -202,15 +215,18 @@ Visit **[http://localhost:3000](http://localhost:3000)** in your browser.
 The frontend communicates with `my-poster-backend` via `src/lib/api.ts`. Key endpoints include:
 
 ### Authentication
+
 - `POST /api/auth/register` — Create a new user account.
 - `POST /api/auth/login` — Sign in with email or phone + password.
 - `GET /api/auth/me` — Retrieve current authenticated session.
 
 ### Templates
+
 - `GET /api/templates?occasionType={type}` — List active templates filtered by occasion.
 - `GET /api/templates/:id` — Retrieve template metadata and layout slots.
 
 ### Poster Generation & AI
+
 - `POST /api/upload/single` — Upload candidate portrait to Cloudinary.
 - `POST /api/upload/multiple` — Upload leadership portraits to Cloudinary.
 - `POST /api/posters/polish-text` — Generate/polish Bengali slogans via Google Gemini.
@@ -221,6 +237,7 @@ The frontend communicates with `my-poster-backend` via `src/lib/api.ts`. Key end
 - `DELETE /api/posters/:id` — Permanently delete a saved poster.
 
 ### Super Admin
+
 - `GET /api/admin/overview` — Fetch platform KPIs (posters, users, moderation counts).
 - `GET /api/admin/moderation/queue` — Paginated moderation queue with status & search filters.
 - `PATCH /api/admin/moderation/:id` — Update moderation status (`approved`, `rejected`, `flagged`).
